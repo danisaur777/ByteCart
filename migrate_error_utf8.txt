@@ -1,0 +1,37 @@
+﻿
+  Dropping all tables  90.46ms DONE
+
+   INFO  Preparing database.  
+
+  Creating migration table  21.40ms DONE
+
+   INFO  Running migrations.  
+
+  0001_01_01_000000_create_users_table  133.34ms DONE
+  0001_01_01_000001_create_cache_table  72.17ms DONE
+  0001_01_01_000002_create_jobs_table  121.80ms DONE
+  2026_03_17_034652_create_categories_table  9.04ms DONE
+  2026_03_17_034652_create_products_table  82.84ms DONE
+  2026_03_17_034653_create_order_items_table  60.08ms FAIL
+
+   Illuminate\Database\QueryException 
+
+  SQLSTATE[HY000]: General error: 1005 Can't create table `bytecart`.`order_items` (errno: 150 "Foreign key constraint is incorrectly formed") (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: bytecart, SQL: alter table `order_items` add constraint `order_items_order_id_foreign` foreign key (`order_id`) references `orders` (`id`) on delete cascade)
+
+  at vendor\laravel\framework\src\Illuminate\Database\Connection.php:838
+    834Γûò             $exceptionType = $this->isUniqueConstraintError($e)
+    835Γûò                 ? UniqueConstraintViolationException::class
+    836Γûò                 : QueryException::class;
+    837Γûò 
+  Γ₧£ 838Γûò             throw new $exceptionType(
+    839Γûò                 $this->getNameWithReadWriteType(),
+    840Γûò                 $query,
+    841Γûò                 $this->prepareBindings($bindings),
+    842Γûò                 $e,
+
+  1   vendor\laravel\framework\src\Illuminate\Database\Connection.php:584
+      PDOException::("SQLSTATE[HY000]: General error: 1005 Can't create table `bytecart`.`order_items` (errno: 150 "Foreign key constraint is incorrectly formed")")
+
+  2   vendor\laravel\framework\src\Illuminate\Database\Connection.php:584
+      PDOStatement::execute()
+
