@@ -5,6 +5,20 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+Route::get('/debug-login', function () {
+    $user = \App\Models\User::where('email', 'admin@bytecart.com')->first();
+    if (!$user) return 'User not found in DB.';
+    $passwordValid = \Illuminate\Support\Facades\Hash::check('password', $user->password);
+    return response()->json([
+        'user_id' => $user->id,
+        'hash' => $user->password,
+        'hash_valid_via_facade' => $passwordValid,
+        'auth_attempt_result' => \Illuminate\Support\Facades\Auth::attempt(['email' => 'admin@bytecart.com', 'password' => 'password']),
+        'db_host' => config('database.connections.mysql.host'),
+        'db_database' => config('database.connections.mysql.database')
+    ]);
+});
+
 Route::get('/', function () {
     return redirect()->route('login');
 });
