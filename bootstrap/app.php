@@ -22,8 +22,5 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->render(function (\Throwable $e) {
-            echo "<html><body style='padding:20px; font-family:monospace; background:black; color:lime;'><h2>ByteCart Fatal Error:</h2><p style='font-size:16px;'>" . $e->getMessage() . "</p><pre style='white-space:pre-wrap;'>" . $e->getTraceAsString() . "</pre></body></html>";
-            die();
-        });
+        //
     })->create();
