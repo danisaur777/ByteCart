@@ -25,17 +25,14 @@ class DashboardController extends Controller
                                   ->whereYear('created_at', Carbon::now()->year)
                                   ->sum('total_amount');
 
-        // 2. Charts Data: Sales per Month (Last 6 months)
         $salesPerMonth = Order::select(
             DB::raw('sum(total_amount) as total'),
-            DB::raw("DATE_FORMAT(created_at, '%b') as month")
+            DB::raw("DATE_FORMAT(created_at, '%b') as month"),
+            DB::raw("MIN(created_at) as min_date")
         )
         ->where('created_at', '>=', Carbon::now()->subMonths(5)->startOfMonth())
         ->groupBy('month')
-        // Order by raw creation date to keep chronological order before formatting in some DBs,
-        // but for simplicity we rely on formatting if data is contiguous. 
-        // A better approach for MySQL requires grouping by year/month physically:
-        ->orderByRaw('MIN(created_at)')
+        ->orderBy('min_date')
         ->get();
 
         // 3. Charts Data: Orders by Status
